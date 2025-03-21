@@ -28,20 +28,17 @@ const createMultiContext = (defaults = Object.create(null)) => {
                             reduceContextToProps,
                             Object.create(null)
                         );
-                        return (
-                            <Component
-                                {...props}
-                                {...this.props}
-                            />
+                        return React.createElement(Component,
+                            {...props, ...this.props}
                         );
                     }
 
                     render() {
-                        return (
-                            <MultiContext
-                                children={this.contextConsumer}
-                                get={contextKeys}
-                            />
+                        return React.createElement(MultiContext,
+                            {
+                                children: this.contextConsumer,
+                                get: contextKeys
+                            }
                         );
                     }
                 };
@@ -82,17 +79,15 @@ const createMultiContext = (defaults = Object.create(null)) => {
 
             // Create this context's consumer.
             const Context = contexts[contextKey];
-            return (
-                <Context.Consumer
-                    children={
-                        (value) =>
-                            this.getConsumer(
-                                children,
-                                index + 1,
-                                values.concat([value])
-                            )
-                    }
-                />
+            return React.createElement(Context.Consumer,
+                {
+                    children: (value) =>
+                        this.getConsumer(
+                            children,
+                            index + 1,
+                            values.concat([value])
+                        )
+                }
             );
         }
 
@@ -107,11 +102,11 @@ const createMultiContext = (defaults = Object.create(null)) => {
             const Context = this.createContext(providers[index][0]);
 
             // Create this context's provider.
-            return (
-                <Context.Provider
-                    children={this.getProvider(children, providers, index + 1)}
-                    value={providers[index][1]}
-                />
+            return React.createElement(Context.Provider,
+                {
+                    children: this.getProvider(children, providers, index + 1),
+                    value: providers[index][1]
+                }
             );
         }
 

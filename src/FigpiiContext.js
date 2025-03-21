@@ -1,5 +1,4 @@
-import React, {useContext} from "react";
-import {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from "react";
 import createMultiContext from "./multiContext";
 
 const doesFigpiiExist = () => {
@@ -58,11 +57,8 @@ export function FigpiiExperimentContext({children}) {
         };
     }, []);
 
-    return (
-        <Context set={activeVariations}>
-            {children}
-        </Context>
-    )
+    return React.createElement(Context, {set: activeVariations},
+        children);
 }
 
 export function useFigpiiExperimentContext(experimentId) {
