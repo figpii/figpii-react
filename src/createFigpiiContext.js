@@ -1,7 +1,7 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import createMultiContext from "./multiContext";
 
-const doesFigpiiExist = () => {
+const doesFigpiiTrackingCodeExist = () => {
     return typeof window !== 'undefined' && typeof window.FIGPII !==
         'undefined';
 };
@@ -17,11 +17,10 @@ export default function createFigpiiContext() {
     const Context = createMultiContext();
 
     return {
-        Provider: ({experimentIds, children}) => {
+        Provider: ({checkInterval, checkTimeout, children}) => {
+            const _checkInterval = checkInterval ?? 200;
+            const _checkTimeout = checkTimeout ?? 7500;
             const defaultVariationState = {};
-            if (experimentIds) {
-                experimentIds.forEach((id) => defaultVariationState[id] = "0");
-            }
             const [activeVariations, setActiveVariation] = useActiveVariationState(defaultVariationState);
             useEffect(() => {
                 let interval;
@@ -31,7 +30,7 @@ export default function createFigpiiContext() {
                     setActiveVariation(variationDecidedEvent.toolId, variationDecidedEvent.variationId);
 
                 const initActiveVariations = () => {
-                    if (doesFigpiiExist()) {
+                    if (doesFigpiiTrackingCodeExist()) {
                         const activeVariations =
                             window.FIGPII.experimentManager?.getActiveVariations();
                         if (activeVariations) {
@@ -47,11 +46,11 @@ export default function createFigpiiContext() {
                 }
 
                 // Start polling every 200ms until FigPii is available
-                interval = setInterval(initActiveVariations, 200);
+                interval = setInterval(initActiveVariations, _checkInterval);
                 // Stop polling after 7500ms if FigPii never loads
                 timeout = setTimeout(() => {
                     clearInterval(interval);
-                }, 7500);
+                }, _checkTimeout);
                 return () => {
                     window.clearInterval(interval);
                     window.clearTimeout(timeout);
