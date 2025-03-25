@@ -74,7 +74,7 @@ const createMultiContext = (defaults = Object.create(null)) => {
             // Check if this context exists.
             const contextKey = this.props.get[index];
             if (!Object.prototype.hasOwnProperty.call(contexts, contextKey)) {
-                throw new Error('Context `' + contextKey + '` does not exist.');
+                return children(...values);
             }
 
             // Create this context's consumer.

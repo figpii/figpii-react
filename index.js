@@ -1,3 +1,3 @@
-import {FigpiiExperimentContext, useFigpiiExperimentContext} from "./src/FigpiiContext";
+import createFigpiiContext from "./src/createFigpiiContext";
 
-export {FigpiiExperimentContext, useFigpiiExperimentContext};
+export {createFigpiiContext};
