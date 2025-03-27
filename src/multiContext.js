@@ -56,13 +56,6 @@ const createMultiContext = (defaults = Object.create(null)) => {
             return contexts[key];
         }
 
-        static getSingleContext(key) {
-            if (!Object.prototype.hasOwnProperty.call(contexts, key)) {
-                contexts[key] = React.createContext();
-            }
-            return contexts[key];
-        }
-
         // Recursively generate <Context.Consumer>, with each consumer being a child of the last.
         getConsumer(children, index, values) {
 

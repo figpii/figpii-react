@@ -64,7 +64,6 @@ export default function createFigpiiContext() {
                 children);
         },
         Consumer: ({experimentIds, children}) => React.createElement(Context, {get: experimentIds},
-            children),
-        getSingleExperimentContext: (experimentId) => Context.getSingleContext(experimentId)
+            children)
     }
 }
