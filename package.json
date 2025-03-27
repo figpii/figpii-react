@@ -1,13 +1,11 @@
 {
   "name": "figpii-react",
   "version": "1.0.0",
-  "description": "A bundle of tools for running FigPii in a React app.",
+  "description": "Show FigPii A/B testing variations in your React app.",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
+  "author": "Taras Guskov <taras.guskov@invesp.com>",
+  "repository": "https://github.com/figpii/figpii-react",
+  "license": "MIT",
   "dependencies": {
     "react": "^16.14.0",
     "react-dom": "^16.14.0"
